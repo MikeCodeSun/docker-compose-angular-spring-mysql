@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  db:
+    image: mysql:latest
+    container_name: mysql-com
+    volumes:
+      - mysql-volume:/data/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - 3303:3306
+
+  backend:
+    image: spring-com
+    container_name: spring-com
+    build: ./servder
+    environment:
+      - DB_NAME=compose
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - DB_HOST=mysql-com
+      - DB_PORT=3306
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+
+  frontend:
+    image: angular-com
+    container_name: angular-com
+    build: ./client
+    ports:
+      - 4200:4200
+    depends_on:
+      - backend
+
+volumes:
+  mysql-volume:

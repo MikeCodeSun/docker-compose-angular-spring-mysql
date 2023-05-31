@@ -1,0 +1,14 @@
+<h1>hello {{ title }}</h1>
+<form (submit)="addUser()">
+  <label for="name">name:</label>
+  <input type="text" name="name" [(ngModel)]="name" />
+  <button type="submit">add</button>
+</form>
+
+<ul [hidden]="!users">
+  <li *ngFor="let u of users.slice().reverse()">
+    <span>id: {{ u.id }}</span>
+    <br />
+    <span>name: {{ u.name }}</span>
+  </li>
+</ul>
